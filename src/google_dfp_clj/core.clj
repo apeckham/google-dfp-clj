@@ -5,4 +5,4 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (google-dfp-clj.dfp/print-network))
+  (google-dfp-clj.dfp/all-line-items))

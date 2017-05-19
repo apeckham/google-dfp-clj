@@ -33,5 +33,5 @@
   (let [session (create-dfp-session)
         services (DfpServices.)
         line-item-service (.get services session LineItemServiceInterface)
-        statement (-> (StatementBuilder.) (.orderBy "id ASC") (.limit StatementBuilder/SUGGESTED_PAGE_LIMIT))]
-    (prn (.getResults (.getLineItemsByStatement line-item-service statement)))))
+        statement (-> (StatementBuilder.) (.orderBy "id ASC") (.limit StatementBuilder/SUGGESTED_PAGE_LIMIT) .toStatement)]
+    (prn (count (seq (.getResults (.getLineItemsByStatement line-item-service statement)))))))
