@@ -29,6 +29,14 @@
         network (.getCurrentNetwork network-service)]
     (prn (.getNetworkCode network) (.getDisplayName network))))
 
+(defn get-custom-targeting [line-item]
+  (->> line-item
+       .getTargeting
+       .getCustomTargeting
+       .getChildren
+       seq
+       (map #(vector (.getKeyId %) (.getOperator %) (.getValueIds %)))))
+
 (defn all-line-items []
   (let [session (create-dfp-session)
         services (DfpServices.)
@@ -45,5 +53,5 @@
          (.getLineItemsByStatement line-item-service)
          .getResults
          seq
-         count
+         (map get-custom-targeting)
          prn)))
