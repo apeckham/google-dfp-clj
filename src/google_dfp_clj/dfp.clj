@@ -33,5 +33,12 @@
   (let [session (create-dfp-session)
         services (DfpServices.)
         line-item-service (.get services session LineItemServiceInterface)
-        statement (-> (StatementBuilder.) (.offset (Integer. 0)) (.orderBy "id ASC") (.limit StatementBuilder/SUGGESTED_PAGE_LIMIT) .toStatement)]
+        statement (-> (StatementBuilder.)
+                      (.offset (Integer. 0))
+                      (.where "orderId = :orderId AND status = :status")
+                      (.withBindVariableValue "orderId" "461712003")
+                      (.withBindVariableValue "status" "delivering")
+                      (.orderBy "id ASC")
+                      (.limit StatementBuilder/SUGGESTED_PAGE_LIMIT)
+                      .toStatement)]
     (prn (count (seq (.getResults (.getLineItemsByStatement line-item-service statement)))))))
