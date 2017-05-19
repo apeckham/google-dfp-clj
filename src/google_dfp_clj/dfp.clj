@@ -1,18 +1,21 @@
 (ns google-dfp-clj.dfp
   (:import com.google.api.ads.common.lib.auth.OfflineCredentials
            com.google.api.ads.dfp.axis.factory.DfpServices
+           com.google.api.ads.dfp.lib.client.DfpSession$Builder
+           com.google.api.ads.common.lib.auth.OfflineCredentials$Builder
+           com.google.api.ads.common.lib.auth.OfflineCredentials$Api
            com.google.api.ads.dfp.axis.v201605.NetworkServiceInterface))
 
 (defn create-dfp-session []
 
   (let [credential
-        (-> (com.google.api.ads.common.lib.auth.OfflineCredentials$Builder.)
-            (.forApi (com.google.api.ads.common.lib.auth.OfflineCredentials$Api/DFP))
+        (-> (OfflineCredentials$Builder.)
+            (.forApi (OfflineCredentials$Api/DFP))
             (.withJsonKeyFilePath "credentials.json")
             .build
             .generateCredential)]
 
-    (-> (com.google.api.ads.dfp.lib.client.DfpSession$Builder.)
+    (-> (DfpSession$Builder.)
         (.withOAuth2Credential credential)
         (.withApplicationName "myapp")
         (.withNetworkCode "1031683")
