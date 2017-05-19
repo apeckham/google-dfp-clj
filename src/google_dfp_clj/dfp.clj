@@ -41,4 +41,9 @@
                       (.orderBy "id ASC")
                       (.limit StatementBuilder/SUGGESTED_PAGE_LIMIT)
                       .toStatement)]
-    (prn (count (seq (.getResults (.getLineItemsByStatement line-item-service statement)))))))
+    (->> statement
+         (.getLineItemsByStatement line-item-service)
+         .getResults
+         seq
+         count
+         prn)))
